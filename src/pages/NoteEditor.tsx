@@ -66,6 +66,16 @@ function NoteEditor() {
     }
   }, [feedback]);
 
+  useEffect(() => {
+    if (SharedData.CurrentFile !== '') {
+      const savedNote = localStorage.getItem(SharedData.CurrentFile);
+      if (savedNote !== null) {
+        setTitle(SharedData.CurrentFile);
+        setNote(savedNote);
+      }
+    }
+  }, []);
+
   return (
     <div>
       <input

@@ -18,3 +18,4 @@
     - Refs from react, similar to static function variables in c
     - Common React Libraries, that people use to expand the core functionality: (Redux, Zustand, or even React Context?)
     - Timer => setTimeout
+    - useEffect => only on mount?
