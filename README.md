@@ -5,3 +5,5 @@
     - Number Cheat Sheets, in a logical way, like a learning road map, what is needed when
     - What libraries/stuff is included just in default react, and what not? e. g. multiple pages actually is not a default!
     - multiple pages => Routing stuff
+    - Tailwind setup: https://tailwindcss.com/docs/installation/using-vite
+    - Tailwind cheat sheet :D
