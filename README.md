@@ -7,3 +7,7 @@
     - multiple pages => Routing stuff
     - Tailwind setup: https://tailwindcss.com/docs/installation/using-vite
     - Tailwind cheat sheet :D
+    - How to get user inputs (e. g. forms)
+        - controlled vs uncontrolled inputs
+    - common React input events
+    - React States
