@@ -1,27 +1,25 @@
 import { useState, useEffect } from 'react';
 import { SharedData } from '../SharedData';
 
-
 function NoteEditor() {
   const [title, setTitle] = useState('');
   const [note, setNote] = useState('');
   const [feedback, setFeedback] = useState('');
 
   const getTitleError = (test: string): string => {
-      if (test === "")
-        return "Empty File Name";
-      else if (localStorage.getItem(test) !== null && test !== SharedData.CurrentFile)
-        return "File Name Already Exists!"
-      return "";
-    }
+    if (test === '') return 'Empty File Name';
+    else if (localStorage.getItem(test) !== null && test !== SharedData.CurrentFile)
+      return 'File Name Already Exists!';
+    return '';
+  };
 
   const handleTitleBlur = () => {
     const trimmedTitle = title.trim();
 
-    if (getTitleError(trimmedTitle) === "")
-    {
-      if (SharedData.CurrentFile !== "")
+    if (getTitleError(trimmedTitle) === '') {
+      if (SharedData.CurrentFile !== '') {
         localStorage.removeItem(SharedData.CurrentFile);
+      }
       SharedData.CurrentFile = trimmedTitle;
     }
     setTitle(trimmedTitle);
@@ -29,15 +27,36 @@ function NoteEditor() {
   };
 
   const handleSave = (saveTitle = title, saveNote = note) => {
-    const TitleError = getTitleError(saveTitle);
-    if (TitleError === "")
-    {
+    const titleError = getTitleError(saveTitle);
+    if (titleError === '') {
       setFeedback('');
       console.log('Saving note:', { title: saveTitle, note: saveNote });
       localStorage.setItem(saveTitle, saveNote);
+    } else {
+      setFeedback(titleError);
     }
-    else
-      setFeedback(TitleError);
+  };
+
+  const handleNewNote = () => {
+    setTitle('');
+    setNote('');
+    SharedData.CurrentFile = '';
+  };
+
+  const handleCopyNote = () => {
+    if (title.trim() === '') {
+      return;
+    }
+
+    let copyTitle = title + ' (copy)';
+    let counter = 1;
+    while (localStorage.getItem(copyTitle) !== null) {
+      copyTitle = `${title} (copy ${counter++})`;
+    }
+
+    setTitle(copyTitle);
+    SharedData.CurrentFile = copyTitle;
+    handleSave(copyTitle, note);
   };
 
   useEffect(() => {
@@ -64,12 +83,27 @@ function NoteEditor() {
         value={note}
         onChange={(e) => setNote(e.target.value)}
       />
-      <button
-        className="mt-4 bg-blue-600 text-white px-5 py-2 rounded-md hover:bg-blue-700 transition"
-        onClick={() => handleSave()}
-      >
-        Save
-      </button>
+
+      <div className="mt-4 flex flex-wrap gap-2">
+        <button
+          className="bg-blue-600 text-white px-5 py-2 rounded-md hover:bg-blue-700 transition"
+          onClick={() => handleSave()}
+        >
+          Save
+        </button>
+        <button
+          className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition"
+          onClick={handleNewNote}
+        >
+          New Note
+        </button>
+        <button
+          className="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600 transition"
+          onClick={handleCopyNote}
+        >
+          Copy Note
+        </button>
+      </div>
 
       {feedback && (
         <p className="mt-2 text-sm text-red-600">{feedback}</p>
