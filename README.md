@@ -11,3 +11,9 @@
         - controlled vs uncontrolled inputs
     - common React input events
     - React States
+    - How does local storage work? 
+        => what is SessionStorage? what other storage types are there?
+        => Iterate over Items, filter them
+        => json for more complex data
+    - Refs from react, similar to static function variables in c
+    - Common React Libraries, that people use to expand the core functionality: (Redux, Zustand, or even React Context?)

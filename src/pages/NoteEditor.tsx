@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { SharedData } from '../SharedData';
 
 function NoteEditor() {
   const [title, setTitle] = useState('');
@@ -6,10 +7,24 @@ function NoteEditor() {
 
   const handleTitleBlur = () => {
     setTitle(title.trim());
+    if (localStorage.getItem(title) != null)
+    {
+      console.warn("Note Already exists!");
+      setTitle("");
+    }
+    else
+      SharedData.CurrentFile = title;
+    handleSave();
   };
 
   const handleSave = () => {
-    console.log('Saving note:', { title, note });
+    if (title != "")
+    {
+      console.log('Saving note:', { title, note });
+      localStorage.setItem(title, note);
+    }
+    else
+      console.warn("Invalid File name!");
   };
 
   return (
