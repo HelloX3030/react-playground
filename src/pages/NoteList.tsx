@@ -83,6 +83,7 @@ function NoteList() {
           if (error) {
             console.error(`Error uploading note "${key}":`, error.message);
           }
+          void data;
         }
       }
     }
