@@ -71,40 +71,60 @@ function NoteList() {
   };
 
   const handleUpload = async () => {
+    const { data: userData, error: userError } = await supabase.auth.getUser();
+    if (userError || !userData.user) {
+      console.error('User not signed in. Upload aborted.');
+      return;
+    }
+  
+    const userId = userData.user.id;
+  
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       if (key) {
         const value = localStorage.getItem(key);
         if (value) {
-          const { data, error } = await supabase
+          const { error } = await supabase
             .from('Notes')
-            .insert([{ name: key, note: value }]);
+            .insert([{ name: key, note: value, user_id: userId }]);
   
           if (error) {
             console.error(`Error uploading note "${key}":`, error.message);
           }
-          void data;
         }
       }
     }
   };
 
-  const handleDownload = () => {
-    supabase
+  const handleDownload = async () => {
+    const { data: userData, error: userError } = await supabase.auth.getUser();
+    if (userError || !userData.user) {
+      console.error('User not signed in. Download aborted.');
+      return;
+    }
+  
+    const userId = userData.user.id;
+  
+    const { data, error } = await supabase
       .from('Notes')
       .select('*')
-      .then(({ data, error }) => {
-        if (error) {
-          console.error('Error downloading notes:', error.message);
-          return;
-        }
+      .eq('user_id', userId);
+  
+    if (error) {
+      console.error('Error downloading notes:', error.message);
+      return;
+    }
+  
+    data?.forEach(note => {
+      localStorage.setItem(note.name, note.note);
+    });
+    
+    console.log('Downloaded notes from Supabase:', data);
+  
+    refreshNotes();
 
-        data?.forEach(note => {
-          localStorage.setItem(note.name, note.note);
-        });
-        refreshNotes();
-      });
   };
+  
 
   return (
     <div>
