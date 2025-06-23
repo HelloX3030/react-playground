@@ -33,7 +33,6 @@ function SignIn() {
       setFeedback(`Sign-in failed: ${error.message}`);
     }
   };
-  
 
   useEffect(() => {
     if (feedback) {
