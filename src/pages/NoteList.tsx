@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SharedData } from '../SharedData';
+import { supabase } from '../utils/supabase';
 
 function NoteList() {
   const [notes, setNotes] = useState<string[]>([]);
@@ -69,11 +70,24 @@ function NoteList() {
     reader.readAsText(file);
   };
 
-  // Placeholder for future Supabase upload implementation
-  const handleUpload = () => {
-    // TODO: implement upload of local notes to Supabase
-    alert('Upload functionality not implemented yet.');
+  const handleUpload = async () => {
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key) {
+        const value = localStorage.getItem(key);
+        if (value) {
+          const { data, error } = await supabase
+            .from('Notes')
+            .insert([{ name: key, note: value }]);
+  
+          if (error) {
+            console.error(`Error uploading note "${key}":`, error.message);
+          }
+        }
+      }
+    }
   };
+  
 
   // Placeholder for future Supabase download implementation
   const handleDownload = () => {
