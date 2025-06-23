@@ -87,12 +87,22 @@ function NoteList() {
       }
     }
   };
-  
 
-  // Placeholder for future Supabase download implementation
   const handleDownload = () => {
-    // TODO: implement download of notes from Supabase to localStorage
-    alert('Download functionality not implemented yet.');
+    supabase
+      .from('Notes')
+      .select('*')
+      .then(({ data, error }) => {
+        if (error) {
+          console.error('Error downloading notes:', error.message);
+          return;
+        }
+
+        data?.forEach(note => {
+          localStorage.setItem(note.name, note.note);
+        });
+        refreshNotes();
+      });
   };
 
   return (
