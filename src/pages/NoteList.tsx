@@ -69,14 +69,25 @@ function NoteList() {
     reader.readAsText(file);
   };
 
+  // Placeholder for future Supabase upload implementation
+  const handleUpload = () => {
+    // TODO: implement upload of local notes to Supabase
+    alert('Upload functionality not implemented yet.');
+  };
+
+  // Placeholder for future Supabase download implementation
+  const handleDownload = () => {
+    // TODO: implement download of notes from Supabase to localStorage
+    alert('Download functionality not implemented yet.');
+  };
+
   return (
     <div>
       <h2 className="text-xl font-bold mb-4">All Notes</h2>
 
       <div className="flex gap-2 mb-4">
         <button
-          className="
-          bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 active:bg-blue-800"
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 active:bg-blue-800"
           onClick={handleExport}
         >
           Export Notes
@@ -86,6 +97,18 @@ function NoteList() {
           onClick={handleImportClick}
         >
           Import Notes
+        </button>
+        <button
+          className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-75 active:bg-purple-800"
+          onClick={handleUpload}
+        >
+          Upload Notes
+        </button>
+        <button
+          className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75 active:bg-indigo-800"
+          onClick={handleDownload}
+        >
+          Download Notes
         </button>
         <input
           type="file"
