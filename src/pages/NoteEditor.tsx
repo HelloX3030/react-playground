@@ -59,6 +59,21 @@ function NoteEditor() {
     handleSave(copyTitle, note);
   };
 
+  const handleDeleteNote = () => {
+    if (SharedData.CurrentFile !== '') {
+      const confirmed = window.confirm(`Are you sure you want to delete "${SharedData.CurrentFile}"?`);
+      if (confirmed) {
+        localStorage.removeItem(SharedData.CurrentFile);
+        setTitle('');
+        setNote('');
+        SharedData.CurrentFile = '';
+        setFeedback('Note deleted');
+      }
+    } else {
+      setFeedback('No note to delete');
+    }
+  };
+
   useEffect(() => {
     if (feedback) {
       const timer = setTimeout(() => setFeedback(''), 3000);
@@ -127,6 +142,18 @@ function NoteEditor() {
           onClick={handleCopyNote}
         >
           Copy Note
+        </button>
+
+        <button
+          className="
+            bg-red-600 text-white px-4 py-2 rounded-md
+            hover:bg-red-700 active:bg-red-800
+            focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75
+            transition
+          "
+          onClick={handleDeleteNote}
+        >
+          Delete Note
         </button>
       </div>
 
