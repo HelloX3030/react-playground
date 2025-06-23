@@ -75,13 +75,14 @@ function NoteList() {
 
       <div className="flex gap-2 mb-4">
         <button
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="
+          bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 active:bg-blue-800"
           onClick={handleExport}
         >
           Export Notes
         </button>
         <button
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 active:bg-green-800"
           onClick={handleImportClick}
         >
           Import Notes

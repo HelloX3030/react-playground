@@ -96,19 +96,34 @@ function NoteEditor() {
 
       <div className="mt-4 flex flex-wrap gap-2">
         <button
-          className="bg-blue-600 text-white px-5 py-2 rounded-md hover:bg-blue-700 transition"
+          className="
+            bg-blue-600 text-white px-5 py-2 rounded-md
+            hover:bg-blue-700 active:bg-blue-800
+            focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75
+            transition
+          "
           onClick={() => handleSave()}
         >
           Save
         </button>
         <button
-          className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition"
+          className="
+            bg-green-600 text-white px-4 py-2 rounded-md
+            hover:bg-green-700 active:bg-green-800
+            focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75
+            transition
+          "
           onClick={handleNewNote}
         >
           New Note
         </button>
         <button
-          className="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600 transition"
+          className="
+            bg-yellow-500 text-white px-4 py-2 rounded-md
+            hover:bg-yellow-600 active:bg-yellow-700
+            focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-75
+            transition
+          "
           onClick={handleCopyNote}
         >
           Copy Note
