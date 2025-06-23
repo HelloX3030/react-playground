@@ -1,10 +1,22 @@
+import { useEffect, useState } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import { NoteList } from './pages/NoteList';
 import { NoteEditor } from './pages/NoteEditor';
 import { SignUp } from './pages/SignUp';
 import {SignIn } from './pages/SignIn';
+import { isUserSignedIn } from './utils/supabase';
 
 function App() {
+  const [signedIn, setSignedIn] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    async function checkAuth() {
+      const loggedIn = await isUserSignedIn();
+      setSignedIn(loggedIn);
+    }
+    checkAuth();
+  }, []);
+
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md">
     <header className="mb-6">
@@ -13,10 +25,14 @@ function App() {
           <Link className="hover:underline" to="/">All Notes</Link>
           <span className="text-gray-400">|</span>
           <Link className="hover:underline" to="/edit">Edit Note</Link>
-          <span className="text-gray-400">|</span>
-          <Link className="hover:underline" to="/sign_up">Sign Up</Link>
-          <span className="text-gray-400">|</span>
-          <Link className="hover:underline" to="/sign_in">Sign In</Link>
+          {!signedIn && (
+          <>
+            <span className="text-gray-400">|</span>
+            <Link className="hover:underline" to="/sign_up">Sign Up</Link>
+            <span className="text-gray-400">|</span>
+            <Link className="hover:underline" to="/sign_in">Sign In</Link>
+          </>
+        )}
         </nav>
     </header>
 
