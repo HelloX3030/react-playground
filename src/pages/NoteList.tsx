@@ -16,10 +16,13 @@ function NoteList() {
     const keys: string[] = [];
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
-      if (key) keys.push(key);
+      if (key && !key.startsWith('sb-')) {
+        keys.push(key);
+      }
     }
     setNotes(keys);
   };
+  
 
   const handleSelect = (noteTitle: string) => {
     SharedData.CurrentFile = noteTitle;
@@ -77,8 +80,6 @@ function NoteList() {
       return;
     }
   
-    const userId = userData.user.id;
-  
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       if (key) {
@@ -86,7 +87,7 @@ function NoteList() {
         if (value) {
           const { error } = await supabase
             .from('Notes')
-            .insert([{ name: key, note: value, user_id: userId }]);
+            .insert([{ name: key, note: value}]);
   
           if (error) {
             console.error(`Error uploading note "${key}":`, error.message);
@@ -103,12 +104,9 @@ function NoteList() {
       return;
     }
   
-    const userId = userData.user.id;
-  
     const { data, error } = await supabase
       .from('Notes')
       .select('*')
-      .eq('user_id', userId);
   
     if (error) {
       console.error('Error downloading notes:', error.message);
