@@ -1,17 +1,112 @@
 # ToDo
 - Create Cheet Sheets:
-    - How to get user inputs (e. g. forms)
-        - controlled vs uncontrolled inputs
-    - common React input events
-    - React States
-    - Refs from react, similar to static function variables in c
-    - Common React Libraries, that people use to expand the core functionality: (Redux, Zustand, or even React Context?)
     - Timer => setTimeout
     - useEffect => only on mount?
     - lslint cheat sheet
     - Maybe some things about blockchain in general. What should you know about it. Legal aspects. How does it work technicly...
     - Bonding Curves (linear, exponential, logarithmic). When which? what others?
-    - 
+
+
+📚 More Common React Libraries Cheat Sheet
+
+This cheat sheet highlights other widely-used libraries that enhance React development—focusing on routing, forms, animations, and more.
+🚦 1. React Router
+
+Purpose: Client-side routing in React apps
+
+npm install react-router-dom
+
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+
+function App() {
+    return (
+        <BrowserRouter>
+            <nav>
+                <Link to="/">Home</Link> | <Link to="/about">About</Link>
+            </nav>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+            </Routes>
+        </BrowserRouter>
+    );
+}
+
+📝 2. React Hook Form
+
+Purpose: Simple, performant form handling
+
+npm install react-hook-form
+
+import { useForm } from 'react-hook-form';
+
+function MyForm() {
+    const { register, handleSubmit } = useForm();
+    const onSubmit = data => console.log(data);
+
+    return (
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <input {...register("firstName")} />
+            <button type="submit">Submit</button>
+        </form>
+    );
+}
+
+🎭 3. Framer Motion
+
+Purpose: Declarative animations and transitions
+
+npm install framer-motion
+
+import { motion } from 'framer-motion';
+
+function Box() {
+    return (
+        <motion.div
+            animate={{ x: 100 }}
+            transition={{ duration: 1 }}
+            style={{ width: 100, height: 100, backgroundColor: 'red' }}
+        />
+    );
+}
+
+🎨 4. Styled Components
+
+Purpose: Write CSS in JS
+
+npm install styled-components
+
+import styled from 'styled-components';
+
+const Button = styled.button`
+  background: teal;
+  color: white;
+  padding: 0.5rem 1rem;
+`;
+
+function App() {
+    return <Button>Click me</Button>;
+}
+
+🌐 5. React Query (TanStack Query)
+
+Purpose: Data fetching and caching
+
+npm install @tanstack/react-query
+
+import { useQuery } from '@tanstack/react-query';
+
+function Posts() {
+    const { data, isLoading } = useQuery({
+        queryKey: ['posts'],
+        queryFn: () => fetch('/api/posts').then(res => res.json())
+    });
+
+    if (isLoading) return <p>Loading...</p>;
+    return <pre>{JSON.stringify(data, null, 2)}</pre>;
+}
+
+
     - What is "Instant Liquidity Migration"?
     => 🛠️ If You Code It Yourself:
 
